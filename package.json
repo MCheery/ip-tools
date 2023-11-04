@@ -1,0 +1,21 @@
+{
+  "name": "ip-tool",
+  "version": "1.0.0",
+  "description": "todo",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "build": "tsc"
+  },
+  "keywords": [
+    "ip",
+    "subnet"
+  ],
+  "author": "Cheery",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6"
+  }
+}
