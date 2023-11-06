@@ -1,22 +1,27 @@
-import { ipv4ToLong, ipv6ToLong } from "./toLong"
 import { IPType, getIPType } from "./isValidIP"
+import { ipv4ToLong, ipv6ToLong } from "./toLong"
 
-export function ipv4InRange(addressv4: string, range: [string, string]): boolean {
-  const start = ipv4ToLong(range[0])
-  const end = ipv4ToLong(range[1])
-  const ip = ipv4ToLong(addressv4)
-  return ip >= start && ip <= end
+export function ipv4InRange(addressv4: string, start: string, end?: string): boolean {
+  const ipNum = ipv4ToLong(addressv4)
+  const startNum = ipv4ToLong(start)
+  if (ipNum < startNum) return false
+
+  if (!end) return true
+  const endNum = ipv4ToLong(end)
+  return ipNum <= endNum
 }
 
-export function ipv6InRange(addressv6: string, range: [string, string]): boolean {
-  const ip = ipv6ToLong(addressv6)
-  const start = ipv6ToLong(range[0])
-  const end = ipv6ToLong(range[1])
-  return ip >= start && ip <= end
+export function ipv6InRange(addressv6: string, start: string, end?: string): boolean {
+  const ipNum = ipv6ToLong(addressv6)
+  const startNum = ipv6ToLong(start)
+  if (ipNum < startNum) return false
+
+  if (!end) return true
+  const endNum = ipv6ToLong(end)
+  return ipNum <= endNum
 }
 
-export function ipInRange(address: string, range: [string, string]): boolean {
-  const [start, end] = range
+export function ipInRange(address: string, start: string, end?: string): boolean {
   const ipType = getIPType(address)
   const startType = getIPType(start)
   const endType = getIPType(end)
@@ -25,10 +30,10 @@ export function ipInRange(address: string, range: [string, string]): boolean {
     return false
   }
   if (ipType === IPType.ipv4) {
-    return ipv4InRange(address, [start, end])
+    return ipv4InRange(address, start, end)
   }
   if (ipType === IPType.ipv6) {
-    return ipv6InRange(address, [start, end])
+    return ipv6InRange(address, start, end)
   }
   return false
 }

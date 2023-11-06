@@ -29,7 +29,9 @@ export enum IPType {
   ipv6 = 6,
   unknown = 0
 }
-export function getIPType(s: string): IPType {
+export function getIPType(s?: string): IPType {
+  if (!s) return IPType.unknown
+
   if (isIPv4(s)) return IPType.ipv4
   if (isIPv6(s)) return IPType.ipv6
   return IPType.unknown
