@@ -1,3 +1,5 @@
+import { IPVersion } from './enums/ipVersion'
+
 const v4Seg = '(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])'
 const v4Str = `(?:${v4Seg}\\.){3}${v4Seg}`
 const ipv4Reg = new RegExp(`^${v4Str}$`)
@@ -24,15 +26,10 @@ export function isIPv6(s: string): boolean {
   return ipv6Reg.test(s)
 }
 
-export enum IPType {
-  ipv4 = 4,
-  ipv6 = 6,
-  unknown = 0
-}
-export function getIPType(s?: string): IPType {
-  if (!s) return IPType.unknown
+export function getIPVersion(s?: string): IPVersion {
+  if (!s) return IPVersion.Unknown
 
-  if (isIPv4(s)) return IPType.ipv4
-  if (isIPv6(s)) return IPType.ipv6
-  return IPType.unknown
+  if (isIPv4(s)) return IPVersion.IPv4
+  if (isIPv6(s)) return IPVersion.IPv6
+  return IPVersion.Unknown
 }

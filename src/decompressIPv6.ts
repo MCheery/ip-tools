@@ -2,9 +2,11 @@
  * Expand IPv6 address
  * @param address string of IPv6 address
  * @returns string of expanded IPv6 address
- * @example expandIPv6('2001:db8::1') -> '2001:0db8:0000:0000:0000:0000:0000:0001'
+ * @example decompressIPv6('2001:db8::1') -> '2001:0db8:0000:0000:0000:0000:0000:0001'
  */
-export function expandIPv6(address: string): string {
+export function decompressIPv6(address: string): string {
+  if (address.length === 0) return address
+
   const segs = address.split(':')
   let omitPointer = segs.findIndex((seg) => seg === '')
   if (omitPointer === -1) {

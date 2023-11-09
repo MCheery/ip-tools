@@ -1,5 +1,7 @@
-import { IPType, getIPType } from "./isValidIP"
-import { ipv4ToLong, ipv6ToLong } from "./toLong"
+import { IPVersion } from './enums/ipVersion'
+import { getIPVersion } from './isValidIP'
+import { ipv4ToLong, ipv6ToLong } from './toLong'
+import { ipRangeArgsAdapter } from './utils/argsAdapter'
 
 export function ipv4InRange(addressv4: string, start: string, end?: string): boolean {
   const ipNum = ipv4ToLong(addressv4)
@@ -21,18 +23,22 @@ export function ipv6InRange(addressv6: string, start: string, end?: string): boo
   return ipNum <= endNum
 }
 
-export function ipInRange(address: string, start: string, end?: string): boolean {
-  const ipType = getIPType(address)
-  const startType = getIPType(start)
-  const endType = getIPType(end)
+export function ipInRange(address: string, start: string, end?: string): boolean
+export function ipInRange(address: string, range: [string, string | undefined]): boolean
+export function ipInRange(arg1: string, arg2: string | [string, string | undefined], arg3?: string): boolean {
+  const [address, start, end] = ipRangeArgsAdapter(arg1, arg2, arg3)
 
-  if (ipType !== startType || ipType !== endType) {
+  const ipVersion = getIPVersion(address)
+  const startType = getIPVersion(start)
+  const endType = getIPVersion(end)
+
+  if (ipVersion !== startType || (end !== undefined && ipVersion !== endType)) {
     return false
   }
-  if (ipType === IPType.ipv4) {
+  if (ipVersion === IPVersion.IPv4) {
     return ipv4InRange(address, start, end)
   }
-  if (ipType === IPType.ipv6) {
+  if (ipVersion === IPVersion.IPv6) {
     return ipv6InRange(address, start, end)
   }
   return false
