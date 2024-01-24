@@ -1,6 +1,6 @@
 {
   "name": "ip-net",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Practical methods for analyzing IP and subnet.",
   "main": "./src/index.ts",
   "test command": "vitest",
