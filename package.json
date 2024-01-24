@@ -1,8 +1,8 @@
 {
-  "name": "ip-tools",
+  "name": "ip-net",
   "version": "1.0.0",
   "description": "Practical methods for analyzing IP and subnet.",
-  "main": "index.js",
+  "main": "./src/index.ts",
   "test command": "vitest",
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
     "subnet"
   ],
   "author": "MCheery",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "typescript": "^5.2.2",
     "vitest": "^0.34.6"
