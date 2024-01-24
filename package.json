@@ -1,5 +1,5 @@
 {
-  "name": "ip-tool",
+  "name": "ip-tools",
   "version": "1.0.0",
   "description": "Practical methods for analyzing IP and subnet.",
   "main": "index.js",
