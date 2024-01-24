@@ -1,0 +1,26 @@
+{
+  "name": "ip-tool",
+  "version": "1.0.0",
+  "description": "Practical methods for analyzing IP and subnet.",
+  "main": "index.js",
+  "test command": "vitest",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MCheery/ip-tools"
+  },
+  "scripts": {
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "build": "tsc"
+  },
+  "keywords": [
+    "ip",
+    "subnet"
+  ],
+  "author": "MCheery",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6"
+  }
+}
