@@ -12,10 +12,15 @@ export function net4Contains(ip: string, netAddr: string, maskLen: number): bool
 export function net6Contains(ip: string, netAddr: string, maskLen: number): boolean {
   const netLong = ipv6ToLong(netAddr)
   const ipLong = ipv6ToLong(ip)
-  const mask = BigInt(0xffffffff << (32 - maskLen))
+  const mask = BigInt('0xffffffffffffffffffffffffffffffff') << BigInt(128 - maskLen)
   return (netLong & mask) === (ipLong & mask)
 }
 
+/**
+ * Check if an IP address is within a network
+ * @example contains('192.168.0.1', '192.168.0.0/16') => true
+ * @example contains('2001:db8:0001:', '2001:db8::/64') => false
+ */
 export function contains(ip: string, network: string): boolean
 export function contains(ip: string, netAddr: string, maskLen: number | string): boolean
 export function contains(ip: string, arg2: string, arg3?: number | string): boolean {
