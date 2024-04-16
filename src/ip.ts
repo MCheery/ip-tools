@@ -20,8 +20,12 @@ export class IPv4 implements IPv4Model {
     }
   }
 
+  private _long: number | undefined
   get long(): number {
-    return ipv4ToLong(this.address)
+    if (this._long === undefined) {
+      this._long = ipv4ToLong(this.address)
+    }
+    return this._long
   }
 
   containedBy(network: string | Subnetv4): boolean
@@ -86,7 +90,11 @@ export class IPv6 implements IPv6Model {
     this.fullAddress = decompressIPv6(address)
   }
 
+  private _long: bigint | undefined
   get long(): bigint {
+    if (this._long === undefined) {
+      this._long = ipv6ToLong(this.address)
+    }
     return ipv6ToLong(this.address)
   }
 

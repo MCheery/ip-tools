@@ -11,7 +11,6 @@ import { netArgsAdapter } from './utils/argsAdapter'
 export class Subnetv4 implements Subnetv4Modal {
   readonly address: string
   readonly maskLen: number
-  readonly ip: IPv4
 
   constructor(network: string)
   constructor(address: string, maskLen: number | string)
@@ -25,23 +24,46 @@ export class Subnetv4 implements Subnetv4Modal {
     }
     this.address = addr
     this.maskLen = len
-    this.ip = ipv4(addr)
   }
 
+  private _ip: IPv4 | undefined
+  get ip(): IPv4 {
+    if (this._ip === undefined) {
+      this._ip = ipv4(this.address)
+    }
+    return this._ip
+  }
+
+  private _mask: string | undefined
   get mask(): string {
-    return ipv4ToMask(this.maskLen)
+    if (this._mask === undefined) {
+      this._mask = ipv4ToMask(this.maskLen)
+    }
+    return this._mask
   }
 
+  private _networkAddress: string | undefined
   get networkAddress(): string {
-    return getIPv4NetworkAddress(this.address, this.maskLen)
+    if (this._networkAddress === undefined) {
+      this._networkAddress = getIPv4NetworkAddress(this.address, this.maskLen)
+    }
+    return this._networkAddress
   }
 
+  private _broadcastAddress: string | undefined
   get broadcastAddress(): string {
-    return getIPv4BroadcastAddress(this.address, this.maskLen)
+    if (this._broadcastAddress === undefined) {
+      this._broadcastAddress = getIPv4BroadcastAddress(this.address, this.maskLen)
+    }
+    return this._broadcastAddress
   }
 
+  private _addressCount: number | undefined
   get addressCount(): number {
-    return 1 << (32 - this.maskLen)
+    if (this._addressCount === undefined) {
+      this._addressCount = 1 << (32 - this.maskLen)
+    }
+    return this._addressCount
   }
 
   getFirstHost(): IPv4 | null {
@@ -78,9 +100,7 @@ export class Subnetv4 implements Subnetv4Modal {
 
 export class Subnetv6 implements Subnetv6Modal {
   readonly address: string
-  readonly fullAddress: string
   readonly maskLen: number
-  readonly ip: IPv6
 
   constructor(network: string)
   constructor(address: string, maskLen: number | string)
@@ -93,25 +113,57 @@ export class Subnetv6 implements Subnetv6Modal {
       throw new Error('Invalid address')
     }
     this.address = addr
-    this.fullAddress = decompressIPv6(addr)
     this.maskLen = len
-    this.ip = ipv6(addr)
   }
 
+  private _ip: IPv6 | undefined
+  get ip(): IPv6 {
+    if (this._ip === undefined) {
+      this._ip = ipv6(this.address)
+    }
+    return this._ip
+  }
+
+  private _fullAddress: string | undefined
+  get fullAddress(): string {
+    if (this._fullAddress === undefined) {
+      this._fullAddress = decompressIPv6(this.address)
+    }
+    return this._fullAddress
+  }
+
+  private _mask: string | undefined
   get mask(): string {
-    return ipv6ToMask(this.maskLen)
+    if (this._mask === undefined) {
+      this._mask = ipv6ToMask(this.maskLen)
+    }
+    return this._mask
   }
 
+  private _networkAddress: string | undefined
   get networkAddress(): string {
-    return getIPv6NetworkAddress(this.address, this.maskLen)
+    // return getIPv6NetworkAddress(this.address, this.maskLen)
+    if (this._networkAddress === undefined) {
+      this._networkAddress = getIPv6NetworkAddress(this.address, this.maskLen)
+    }
+    return this._networkAddress
   }
 
+  private _broadcastAddress: string | undefined
   get broadcastAddress(): string {
-    return getIPv6BroadcastAddress(this.address, this.maskLen)
+    // return getIPv6BroadcastAddress(this.address, this.maskLen)
+    if (this._broadcastAddress === undefined) {
+      this._broadcastAddress = getIPv6BroadcastAddress(this.address, this.maskLen)
+    }
+    return this._broadcastAddress
   }
 
+  private _addressCount: bigint | undefined
   get addressCount(): bigint {
-    return BigInt(1) << BigInt(128 - this.maskLen)
+    if (this._addressCount === undefined) {
+      this._addressCount = BigInt(1) << BigInt(128 - this.maskLen)
+    }
+    return this._addressCount
   }
 
   getFirstHost(): IPv6 | null {
